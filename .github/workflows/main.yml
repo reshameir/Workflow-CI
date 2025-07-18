@@ -15,7 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      MLFLOW_TRACKING_URI: ${{ github.workspace }}/MLproject/mlruns
+      MLFLOW_TRACKING_URI: ${{ github.workspace }}/MLproject/mlruns #change to MLproject
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE
