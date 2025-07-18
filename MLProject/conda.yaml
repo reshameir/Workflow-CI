@@ -1,7 +1,7 @@
 channels:
 - conda-forge
 dependencies:
-- python=3.10.18
+- python=3.12.7
 - pip<=25.1
 - pip:
   - mlflow==3.1.1
@@ -9,5 +9,6 @@ dependencies:
   - scikit-learn==1.7.0
   - pandas
   - numpy
+  - dagshub
   - joblib
 name: mlflow-env
