@@ -15,7 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      MLFLOW_TRACKING_URI: ${{ github.workspace }}/MLProject/mlruns #change to MLproject
+      MLFLOW_TRACKING_URI: ${{ github.workspace }}/MLProject/mlruns
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE
@@ -40,7 +40,7 @@ jobs:
           
       # Run as a mlflow project
       - name: Run mlflow project
-        working-directory: ./MLproject
+        working-directory: ./MLProject
         run: mlflow run . --env-manager=local
       
       # Get latest run_id
@@ -60,7 +60,7 @@ jobs:
           # GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}  # Mengambil kredensial dari GitHub Secrets
           # GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}  # Mengambil kredensial dari GitHub Secrets
         # run: |
-          # python MLproject/upload_to_gdrive.py
+          # python MLProject/upload_to_gdrive.py
 
           
       # Build Docker Model
