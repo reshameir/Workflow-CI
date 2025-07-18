@@ -43,7 +43,8 @@ jobs:
       # Get latest run_id
       - name: Get latest MLflow run_id
         run: |
-          RUN_ID=$(ls -td $MLFLOW_TRACKING_URI/0/*/ | head -n 1 | cut -d'/' -f3)
+          LATEST_RUN_DIR=$(ls -td $MLFLOW_TRACKING_URI/0/*/ | head -n 1)
+          RUN_ID=$(basename $LATEST_RUN_DIR)
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
           echo "Latest run_id: $RUN_ID"
           
