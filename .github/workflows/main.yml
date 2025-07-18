@@ -46,8 +46,7 @@ jobs:
       # Get latest run_id
       - name: Get latest MLflow run_id
         run: |
-          # The mlruns directory is now correctly located via MLFLOW_TRACKING_URI
-          RUN_ID=$(ls -td ${{ env.MLFLOW_TRACKING_URI }}/0/*/ | head -n 1 | cut -d'/' -f3)
+          RUN_ID=$(ls -td mlruns/0/*/ | head -n 1 | cut -d'/' -f3)
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
           echo "Latest run_id: $RUN_ID"
           
