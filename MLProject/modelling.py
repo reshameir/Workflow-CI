@@ -6,8 +6,6 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 import numpy as np
 import warnings
-import joblib
-import os
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
@@ -71,22 +69,18 @@ with mlflow.start_run(run_name="Random Forest with GridSearchCV"):
     cm = confusion_matrix(y_test, y_pred)
     mlflow.log_dict(cm.tolist(), "confusion_matrix.json")
 
-    # SOLUSI 1: Simpan model menggunakan joblib dan log sebagai artifact
-    model_filename = "random_forest_model.pkl"
-    joblib.dump(best_rf_model, model_filename)
-    mlflow.log_artifact(model_filename, "model")
-    
-    # Hapus file temporary
-    os.remove(model_filename)
+    # Log the model using the scikit-learn flavor.
+    # This automatically creates the required MLmodel file and packages dependencies.
+    mlflow.sklearn.log_model(
+        sk_model=best_rf_model,
+        artifact_path="model"
+    )
 
     # Log feature importance
     feature_importance = best_rf_model.feature_importances_
     feature_importance_df = pd.DataFrame({'Feature': X_train.columns, 'Importance': feature_importance})
-    feature_importance_df.to_csv("feature_importance.csv", index=False)
-    mlflow.log_artifact("feature_importance.csv")
-    
-    # Hapus file temporary
-    os.remove("feature_importance.csv")
+    # Log the dataframe as a CSV artifact without saving it locally first
+    mlflow.log_text(feature_importance_df.to_csv(index=False), "feature_importance.csv")
 
     # Log Tags
     mlflow.set_tag("model_type", "RandomForest")
